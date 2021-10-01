@@ -1,0 +1,20 @@
+ersion: '3'
+
+services:
+  db:
+    image: mariadb:latest
+    container_name: db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: my_secret_password
+      MARIADB_DATABASE: app_db
+      MARIADB_USER: db_user
+      MARIADB_PASSWORD: db_user_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      - db_conf:/etc/mysql
+volumes:
+  dbdata:
+  db_conf:
