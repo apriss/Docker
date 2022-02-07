@@ -1,0 +1,60 @@
+Version: '1'
+services:
+
+ #Laravel App
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hakase-labs/laravel
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - app-network:
+
+#Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./nginx/ssl/:/etc/nginx/ssl/
+    networks:
+      - app-network:
+ 
+ #mariaDB service
+  db_services:
+   mariadb:
+     image: mariadb:latest
+     container_name: db
+     restart: always
+     environment:
+       MARIADB_ROOT_PASSWORD: my_secret_password
+       MARIADB_DATABASE: app_db
+       MARIADB_USER: db_user
+       MARIADB_PASSWORD: db_user_pass
+     ports:
+       - "3306:3306"
+     volumes:
+       - dbdata:/var/lib/mysql
+       - db_conf:/etc/mysql
+     networks:
+       - app-network:
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
