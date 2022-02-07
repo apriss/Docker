@@ -9,8 +9,8 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 sudo apt update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 
-myvariable=$USER
-sudo usermod -aG docker ${USER}
+myvariable = $USER
+sudo usermod -aG docker $myvariable
 
 sudo systemctl start docker
 
