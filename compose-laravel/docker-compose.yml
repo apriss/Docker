@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: hakase-labs/laravel
+    image: #laravel-image-name
     container_name: app
     restart: unless-stopped
     tty: true
