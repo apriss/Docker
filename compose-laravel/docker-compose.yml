@@ -59,10 +59,10 @@ networks:
   app-network:
     driver: bridge
     
- #Volumes
- volumes:
-  mysqldata:
-    driver: local
+# #Volumes
+# volumes:
+#  mysqldata:
+#    driver: local
     
 #git clone https://github.com/laravel/laravel.git laravel-app
 #cd ~/laravel-app
