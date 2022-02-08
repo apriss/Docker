@@ -1,0 +1,40 @@
+git clone https://github.com/laravel/laravel.git laravel-app
+cd ~/laravel-app
+docker run --rm -v $(pwd):/app composer install
+sudo chown -R $USER:$USER ~/laravel-app
+
+nano ~/laravel-app/docker-compose.yml
+
+nano ~/laravel-app/Dockerfile
+
+mkdir ~/laravel-app/php
+nano ~/laravel-app/php/local.ini
+
+upload_max_filesize=40M
+post_max_size=40M
+
+
+mkdir -p ~/laravel-app/nginx/conf.d
+nano ~/laravel-app/nginx/conf.d/app.conf
+
+mkdir ~/laravel-app/mysql
+nano ~/laravel-app/mysql/my.cnf
+
+[mysqld]
+general_log = 1
+general_log_file = /var/lib/mysql/general.log
+
+cp .env.example .env
+nano .env
+
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=laraveluser
+DB_PASSWORD=your_laravel_db_password
+
+docker-compose build
+docker-compose up -d
+docker ps
+
