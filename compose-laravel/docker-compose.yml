@@ -1,11 +1,10 @@
 Version: '3'
 services:
-
- #Laravel App
+  #Laravel App
   app:
     build:
-      context: .
-      dockerfile: Dockerfile
+    context: .
+    dockerfile: Dockerfile
     image: hakase-labs/laravel
     container_name: app
     restart: unless-stopped
@@ -18,8 +17,8 @@ services:
       - ./:/var/www/html
     networks:
       - app-network:
-
-#Nginx Service
+      
+  #Nginx Service
   nginx:
     image: nginx:alpine
     container_name: nginx
@@ -35,37 +34,32 @@ services:
     networks:
       - app-network:
  
- #mariaDB service
+  #mariaDB service
   db_services:
-   mariadb:
-     image: mariadb:latest
-     container_name: db
-     restart: always
-     environment:
-       MARIADB_ROOT_PASSWORD: my_secret_password
-       MARIADB_DATABASE: app_db
-       MARIADB_USER: db_user
-       MARIADB_PASSWORD: db_user_pass
-     ports:
-       - "3306:3306"
-     volumes:
-       - dbdata:/var/lib/mysql
-       - db_conf:/etc/mysql
-     networks:
-       - app-network:
+    image: mariadb:latest
+    container_name: db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: my_secret_password
+      MARIADB_DATABASE: app_db
+      MARIADB_USER: db_user
+      MARIADB_PASSWORD: db_user_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      - db_conf:/etc/mysql
+    networks:
+      - app-network:
 
-#Docker Networks
-networks:
-  app-network:
-    driver: bridge
+  #Docker Networks
+  networks:
+    app-network:
+      driver: bridge
     
 # #Volumes
 # volumes:
 #  mysqldata:
 #    driver: local
     
-#git clone https://github.com/laravel/laravel.git laravel-app
-#cd ~/laravel-app
-#docker run --rm -v $(pwd):/app composer install
-#sudo chown -R $USER:$USER ~/laravel-app
-#nano ~/laravel-web/docker-compose.yml
+
