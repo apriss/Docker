@@ -3,7 +3,7 @@
 sudo apt update
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
 
-do apt remove docker docker-engine docker.io containerd runc
+apt remove docker docker-engine docker.io containerd runc
 
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg
 
